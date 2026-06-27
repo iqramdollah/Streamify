@@ -10,7 +10,7 @@ interface Movie {
 
 export default function MovieCard({ movie }: { movie: Movie }) {
   return (
-    <Link href={`/watch/${movie.id}`}>
+    <Link href={`/movie/${movie.id}`}>
       <div className="relative group cursor-pointer rounded-xl overflow-hidden shadow-lg shadow-black/60 hover:shadow-2xl hover:shadow-black/80 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
         {/* Thumbnail */}
         <img

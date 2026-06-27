@@ -77,9 +77,9 @@ export default function HeroBanner({ movies }: { movies: Movie[] }) {
         </p>
 
         <div className="flex gap-3">
-          <Link href={`/watch/${movie.id}`}>
-            <button className="flex items-center gap-2 bg-white text-black font-bold px-8 py-3 rounded hover:bg-gray-200 transition-colors text-base">
-              ▶ Play
+          <Link href={`/movie/${movie.id}`}>
+            <button className="flex items-center gap-2 bg-gray-600/70 text-white font-bold px-8 py-3 rounded hover:bg-gray-600/50 transition-colors text-base backdrop-blur-sm">
+              ℹ More Info
             </button>
           </Link>
           <button className="flex items-center gap-2 bg-gray-600/70 text-white font-bold px-8 py-3 rounded hover:bg-gray-600/50 transition-colors text-base backdrop-blur-sm">

@@ -9,20 +9,15 @@ export default async function WatchPage({ params }: { params: Promise<{ id: stri
 
   return (
     <main className="bg-[#141414] min-h-screen">
-      {/* Simple top bar instead of full navbar */}
       <div className="flex items-center px-8 py-4 bg-black">
         <Link href="/" className="text-red-600 text-xl font-black tracking-widest uppercase mr-8">
           Streamify
         </Link>
-        <Link href="/" className="text-gray-400 hover:text-white text-sm transition-colors">
-          ← Back to Home
+        <Link href={`/movie/${movie.id}`} className="text-gray-400 hover:text-white text-sm transition-colors">
+          ← Back to {movie.title}
         </Link>
       </div>
-
-      {/* Video */}
       <VideoPlayerWrapper streamUrl={movie.stream_url} />
-
-      {/* Movie info */}
       <div className="px-8 py-6 max-w-4xl">
         <h1 className="text-white text-4xl font-black mt-2">{movie.title}</h1>
         <p className="text-gray-400 mt-2">{movie.year} • {movie.genre}</p>
