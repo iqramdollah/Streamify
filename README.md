@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Streamify
+
+A Netflix-inspired streaming platform built with Next.js, Supabase, and Tailwind CSS.
+
+## Live Demo
+
+[netflix-clone-drab-gamma.vercel.app](https://netflix-clone-drab-gamma.vercel.app)
+
+## Features
+
+- Auto-switching hero banner with fade transitions
+- Movie rows with horizontal scroll and arrow navigation
+- Movie detail page with trailer player
+- Latest in cinemas trailer row (YouTube embed)
+- Search by title or genre
+- User authentication (signup/login/logout)
+- Fully responsive design
+
+## Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| Next.js 16 | Frontend framework |
+| TypeScript | Type safety |
+| Tailwind CSS | Styling |
+| Supabase | Database and authentication |
+| HLS.js | Video streaming |
+| Vercel | Deployment |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+
+- npm
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Installation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Clone the repository
+   git clone https://github.com/iqramdollah/netflix-clone.git
+   cd netflix-clone
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Install dependencies
+   npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Set up environment variables
+   Create a .env.local file in the root directory:
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-## Learn More
+4. Set up Supabase
+   Run this SQL in your Supabase SQL editor:
+   create table movies (
+     id uuid default gen_random_uuid() primary key,
+     title text not null,
+     description text,
+     thumbnail_url text,
+     stream_url text not null,
+     trailer_url text,
+     genre text,
+     year int,
+     created_at timestamp default now()
+   );
 
-To learn more about Next.js, take a look at the following resources:
+5. Run the development server
+   npm run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   Open http://localhost:3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+app/
+  page.tsx          - Home page
+  login/            - Login page
+  signup/           - Signup page
+  movie/[id]/       - Movie detail page
+  watch/[id]/       - Video player page
+  search/           - Search results page
+components/
+  Navbar.tsx        - Navigation bar with auth
+  HeroBanner.tsx    - Auto-switching hero
+  MovieCard.tsx     - Movie card with hover effects
+  MovieRow.tsx      - Scrollable movie row
+  TrailerCard.tsx   - Trailer embed card
+  TrailerRow.tsx    - Scrollable trailer row
+  VideoPlayer.tsx   - HLS and YouTube player
+lib/
+  supabase.ts       - Supabase client
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Screenshots
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Home Page - Hero banner with auto-switching thumbnails and movie rows
+Movie Detail - Full detail page with trailer and movie info
+Watch Page - Clean video player with movie details
+Search - Real-time search by title or genre
+Auth - Login and signup pages
+
+## Author
+
+Iqram - github.com/iqramdollah
