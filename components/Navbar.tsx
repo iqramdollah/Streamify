@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false)
@@ -10,6 +11,8 @@ export default function Navbar() {
   const [userInitial, setUserInitial] = useState('U')
   const [menuOpen, setMenuOpen] = useState(false)
   const router = useRouter()
+  const pathname = usePathname()
+const isHome = pathname === '/'
 
   useEffect(() => {
     const getUser = async () => {
@@ -29,7 +32,10 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="fixed top-0 w-full z-50 px-12 py-4 flex items-center justify-between">
+        <nav className={`fixed top-0 w-full z-50 px-12 py-4 flex items-center justify-between ${
+      isHome ? '' : 'bg-black'
+    }`}>
+
       <div className="flex items-center gap-10">
         <Link href="/">
           <h1 className="text-red-600 text-2xl font-black tracking-widest cursor-pointer uppercase">
@@ -51,6 +57,13 @@ export default function Navbar() {
               type="text"
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && searchQuery.trim()) {
+                  router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
+                  setSearchOpen(false)
+                  setSearchQuery('')
+                }
+              }}
               placeholder="Search titles..."
               autoFocus
               className="bg-black/80 border border-gray-500 text-white text-sm px-3 py-1.5 rounded outline-none focus:border-white transition-colors w-48"
