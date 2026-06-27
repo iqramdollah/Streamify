@@ -4,6 +4,7 @@ import HeroBanner from '@/components/HeroBanner'
 import MovieRow from '@/components/MovieRow'
 import TrailerRow from '@/components/TrailerRow'
 
+
 export default async function Home() {
   const { data: movies } = await supabase
     .from('movies')
