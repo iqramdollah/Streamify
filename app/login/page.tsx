@@ -1,4 +1,3 @@
-// app/login/page.tsx
 'use client'
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
@@ -29,69 +28,61 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-backgroundImage: `url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1920')`,        }}
-      />
-      <div className="absolute inset-0 bg-black/60" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60" />
-
-      <header className="relative z-10 px-10 py-6 md:px-16">
+    <div className="min-h-screen w-full flex flex-col bg-black">
+      <header className="px-10 py-6 md:px-16">
         <span className="text-red-600 text-3xl font-black tracking-widest uppercase select-none">
           Streamify
         </span>
       </header>
 
-      <main className="relative z-10 flex flex-1 items-center justify-center px-4">
-        <div className="w-full max-w-md bg-black/80 rounded-md px-16 py-16">
+      <main className="flex flex-1 items-center justify-center px-4">
+        <div className="w-full max-w-md bg-zinc-900 rounded-md px-16 py-16">
           <h1 className="text-white text-4xl font-bold mb-10">Sign In</h1>
 
           <div className="flex flex-col gap-5">
             {/* Email */}
-<div className="relative h-14">
-  <input
-    id="email"
-    type="email"
-    value={email}
-    onChange={e => setEmail(e.target.value)}
-    onKeyDown={e => e.key === 'Enter' && handleLogin()}
-    className="absolute inset-0 w-full bg-[#333] text-white rounded px-4 pt-6 pb-2 text-sm outline-none focus:ring-2 focus:ring-white/30 transition-all"
-  />
-  <label
-    htmlFor="email"
-    className={`absolute left-4 transition-all duration-150 pointer-events-none ${
-      email
-        ? 'top-2 text-xs text-gray-400'
-        : 'top-1/2 -translate-y-1/2 text-base text-gray-400'
-    }`}
-  >
-    Email or phone number
-  </label>
-</div>
+            <div className="relative h-14">
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleLogin()}
+                className="absolute inset-0 w-full bg-[#333] text-white rounded px-4 pt-6 pb-2 text-sm outline-none focus:ring-2 focus:ring-white/30 transition-all"
+              />
+              <label
+                htmlFor="email"
+                className={`absolute left-4 transition-all duration-150 pointer-events-none ${
+                  email
+                    ? 'top-2 text-xs text-gray-400'
+                    : 'top-1/2 -translate-y-1/2 text-base text-gray-400'
+                }`}
+              >
+                Email or phone number
+              </label>
+            </div>
 
-{/* Password */}
-<div className="relative h-16">
-  <input
-    id="password"
-    type="password"
-    value={password}
-    onChange={e => setPassword(e.target.value)}
-    onKeyDown={e => e.key === 'Enter' && handleLogin()}
-    className="absolute inset-0 w-full bg-[#333] text-white rounded px-4 pt-8 pb-2 text-sm outline-none focus:ring-2 focus:ring-white/30 transition-all"
-  />
-  <label
-    htmlFor="password"
-    className={`absolute left-4 transition-all duration-150 pointer-events-none ${
-      password
-        ? 'top-2 text-xs text-gray-400'
-        : 'top-1/2 -translate-y-1/2 text-base text-gray-400'
-    }`}
-  >
-    Password
-  </label>
-</div>
+            {/* Password */}
+            <div className="relative h-14">
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleLogin()}
+                className="absolute inset-0 w-full bg-[#333] text-white rounded px-4 pt-6 pb-2 text-sm outline-none focus:ring-2 focus:ring-white/30 transition-all"
+              />
+              <label
+                htmlFor="password"
+                className={`absolute left-4 transition-all duration-150 pointer-events-none ${
+                  password
+                    ? 'top-2 text-xs text-gray-400'
+                    : 'top-1/2 -translate-y-1/2 text-base text-gray-400'
+                }`}
+              >
+                Password
+              </label>
+            </div>
 
             {error && (
               <p className="text-yellow-400 text-sm bg-yellow-400/10 border border-yellow-400/20 px-4 py-3 rounded">
