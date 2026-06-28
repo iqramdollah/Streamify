@@ -46,48 +46,56 @@ export default function SignupPage() {
       </header>
 
       <main className="relative z-10 flex flex-1 items-center justify-center px-4">
-        <div className="w-full max-w-md bg-black/75 rounded-md px-12 py-14">
-          <h1 className="text-white text-3xl font-bold mb-8">Sign Up</h1>
+        <div className="w-full max-w-md bg-black/80 rounded-md px-16 py-16">
+          <h1 className="text-white text-4xl font-bold mb-10">Sign Up</h1>
 
-          <div className="flex flex-col gap-4">
-            <div className="relative">
+          <div className="flex flex-col gap-5">
+            {/* Email */}
+            <div className="relative h-14">
               <input
                 id="email"
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSignup()}
-                placeholder=" "
-                className="peer w-full bg-[#333] text-white rounded px-4 pt-5 pb-2 text-base outline-none focus:ring-2 focus:ring-white/30 transition-all placeholder-transparent"
+                className="absolute inset-0 w-full bg-[#333] text-white rounded px-4 pt-5 pb-1 text-base outline-none focus:ring-2 focus:ring-white/30 transition-all"
               />
               <label
                 htmlFor="email"
-                className="absolute left-4 top-1 text-xs text-gray-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs pointer-events-none"
+                className={`absolute left-4 transition-all duration-150 pointer-events-none ${
+                  email
+                    ? 'top-1.5 text-xs text-gray-400'
+                    : 'top-4 text-base text-gray-400'
+                }`}
               >
                 Email
               </label>
             </div>
 
-            <div className="relative">
+            {/* Password */}
+            <div className="relative h-14">
               <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSignup()}
-                placeholder=" "
-                className="peer w-full bg-[#333] text-white rounded px-4 pt-5 pb-2 text-base outline-none focus:ring-2 focus:ring-white/30 transition-all placeholder-transparent"
+                className="absolute inset-0 w-full bg-[#333] text-white rounded px-4 pt-5 pb-1 text-base outline-none focus:ring-2 focus:ring-white/30 transition-all"
               />
               <label
                 htmlFor="password"
-                className="absolute left-4 top-1 text-xs text-gray-400 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs pointer-events-none"
+                className={`absolute left-4 transition-all duration-150 pointer-events-none ${
+                  password
+                    ? 'top-1.5 text-xs text-gray-400'
+                    : 'top-4 text-base text-gray-400'
+                }`}
               >
                 Password
               </label>
             </div>
 
             {error && (
-              <p className="text-yellow-400 text-sm bg-yellow-400/10 border border-yellow-400/20 px-4 py-2 rounded">
+              <p className="text-yellow-400 text-sm bg-yellow-400/10 border border-yellow-400/20 px-4 py-3 rounded">
                 {error}
               </p>
             )}
@@ -95,7 +103,7 @@ export default function SignupPage() {
             <button
               onClick={handleSignup}
               disabled={loading}
-              className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 rounded text-base transition-colors disabled:opacity-60 disabled:cursor-not-allowed mt-2"
+              className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded text-base transition-colors disabled:opacity-60 disabled:cursor-not-allowed mt-2"
             >
               {loading ? 'Creating account...' : 'Sign Up'}
             </button>
@@ -106,6 +114,11 @@ export default function SignupPage() {
             <Link href="/login" className="text-white font-semibold hover:underline">
               Sign in
             </Link>
+          </p>
+
+          <p className="text-gray-600 text-xs mt-5 leading-relaxed">
+            This page is protected by Google reCAPTCHA to ensure you&apos;re not a bot.{' '}
+            <a href="#" className="text-blue-500 hover:underline">Learn more</a>
           </p>
         </div>
       </main>
