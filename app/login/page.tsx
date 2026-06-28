@@ -33,8 +33,7 @@ export default function LoginPage() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://assets.nflxext.com/ffe/siteui/vlv3/9134db96-e336-4c2f-90e9-1d2dcffe4d97/web/MY-en-20250505-TRIFECTA-perspective_e43a1c7d-67df-4b61-a7b7-cecf48b07c6e_large.jpg')`,
-        }}
+backgroundImage: `url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1920')`,        }}
       />
       <div className="absolute inset-0 bg-black/60" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60" />
