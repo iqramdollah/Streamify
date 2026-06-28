@@ -22,46 +22,38 @@ export default function MovieRow({ title, movies }: { title: string, movies: Mov
   }
 
   return (
-    <div className="mb-10 group/row">
-      <div className="flex items-center justify-between px-12 mb-3">
-        <h2 className="text-white text-lg font-bold hover:text-gray-300 cursor-pointer transition-colors">
-          {title}
-          <span className="text-red-500 text-sm ml-2 opacity-0 group-hover/row:opacity-100 transition-opacity">
-            Explore all →
-          </span>
-        </h2>
+  <div style={{ marginBottom: '2.5rem' }} className="group/row">
+    <h2 style={{ paddingLeft: '6rem', paddingRight: '6rem' }} className="text-white text-lg font-bold mb-3">
+      {title}
+    </h2>
+
+    <div className="relative">
+      <button
+        onClick={() => scroll('left')}
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-opacity"
+      >
+        ‹
+      </button>
+
+      <div
+        ref={rowRef}
+        style={{ paddingLeft: '6rem', paddingRight: '6rem', scrollbarWidth: 'none' }}
+        className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide scroll-smooth"
+      >
+        {movies.map(movie => (
+          <div key={movie.id} className="flex-none w-56 md:w-64">
+            <MovieCard movie={movie} />
+          </div>
+        ))}
       </div>
 
-      <div className="relative">
-        {/* Left arrow */}
-        <button
-          onClick={() => scroll('left')}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-opacity"
-        >
-          ‹
-        </button>
-
-        {/* Cards */}
-        <div
-          ref={rowRef}
-          className="flex gap-2 overflow-x-auto px-12 pb-2 scrollbar-hide scroll-smooth"
-          style={{ scrollbarWidth: 'none' }}
-        >
-          {movies.map(movie => (
-            <div key={movie.id} className="flex-none w-56 md:w-64">
-              <MovieCard movie={movie} />
-            </div>
-          ))}
-        </div>
-
-        {/* Right arrow */}
-        <button
-          onClick={() => scroll('right')}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-opacity"
-        >
-          ›
-        </button>
-      </div>
+      <button
+        onClick={() => scroll('right')}
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-black text-white w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-opacity"
+      >
+        ›
+      </button>
     </div>
-  )
+  </div>
+)
 }
