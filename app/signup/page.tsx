@@ -51,48 +51,48 @@ export default function SignupPage() {
 
           <div className="flex flex-col gap-5">
             {/* Email */}
-            <div className="relative h-14">
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && handleSignup()}
-                className="absolute inset-0 w-full bg-[#333] text-white rounded px-4 pt-5 pb-1 text-base outline-none focus:ring-2 focus:ring-white/30 transition-all"
-              />
-              <label
-                htmlFor="email"
-                className={`absolute left-4 transition-all duration-150 pointer-events-none ${
-                  email
-                    ? 'top-1.5 text-xs text-gray-400'
-                    : 'top-4 text-base text-gray-400'
-                }`}
-              >
-                Email
-              </label>
-            </div>
+<div className="relative h-14">
+  <input
+    id="email"
+    type="email"
+    value={email}
+    onChange={e => setEmail(e.target.value)}
+    onKeyDown={e => e.key === 'Enter' && handleSignup()}
+    className="absolute inset-0 w-full bg-[#333] text-white rounded px-4 pt-6 pb-2 text-sm outline-none focus:ring-2 focus:ring-white/30 transition-all"
+  />
+  <label
+    htmlFor="email"
+    className={`absolute left-4 transition-all duration-150 pointer-events-none ${
+      email
+        ? 'top-2 text-xs text-gray-400'
+        : 'top-1/2 -translate-y-1/2 text-base text-gray-400'
+    }`}
+  >
+    Email or phone number
+  </label>
+</div>
 
-            {/* Password */}
-            <div className="relative h-14">
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && handleSignup()}
-                className="absolute inset-0 w-full bg-[#333] text-white rounded px-4 pt-5 pb-1 text-base outline-none focus:ring-2 focus:ring-white/30 transition-all"
-              />
-              <label
-                htmlFor="password"
-                className={`absolute left-4 transition-all duration-150 pointer-events-none ${
-                  password
-                    ? 'top-1.5 text-xs text-gray-400'
-                    : 'top-4 text-base text-gray-400'
-                }`}
-              >
-                Password
-              </label>
-            </div>
+{/* Password */}
+<div className="relative h-14">
+  <input
+    id="password"
+    type="password"
+    value={password}
+    onChange={e => setPassword(e.target.value)}
+    onKeyDown={e => e.key === 'Enter' && handleSignup()}
+    className="absolute inset-0 w-full bg-[#333] text-white rounded px-4 pt-6 pb-2 text-sm outline-none focus:ring-2 focus:ring-white/30 transition-all"
+  />
+  <label
+    htmlFor="password"
+    className={`absolute left-4 transition-all duration-150 pointer-events-none ${
+      password
+        ? 'top-2 text-xs text-gray-400'
+        : 'top-1/2 -translate-y-1/2 text-base text-gray-400'
+    }`}
+  >
+    Password
+  </label>
+</div>
 
             {error && (
               <p className="text-yellow-400 text-sm bg-yellow-400/10 border border-yellow-400/20 px-4 py-3 rounded">
