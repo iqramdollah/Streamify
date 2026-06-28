@@ -1,47 +1,52 @@
+'use client'
+import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
-import { cookies } from 'next/headers'
-import { createServerClient } from '@supabase/ssr'
 import Navbar from '@/components/Navbar'
 import MovieCard from '@/components/MovieCard'
+import TVShowCard from '@/components/TVShowCard'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
-export default async function MyListPage() {
-  const cookieStore = await cookies()
+export default function MyListPage() {
+  const [movies, setMovies] = useState<any[]>([])
+  const [shows, setShows] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
-  const supabaseServer = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll()
-        },
-      },
+  useEffect(() => {
+    const fetchList = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        router.push('/login')
+        return
+      }
+
+      const { data } = await supabase
+        .from('my_list')
+        .select('*, movies(*), tv_shows(*)')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+
+      const movieList = data?.filter(item => item.movies).map(item => item.movies) || []
+      const showList = data?.filter(item => item.tv_shows).map(item => item.tv_shows) || []
+
+      setMovies(movieList)
+      setShows(showList)
+      setLoading(false)
     }
-  )
 
-  const { data: { user } } = await supabaseServer.auth.getUser()
+    fetchList()
+  }, [router])
 
-  if (!user) {
+  if (loading) {
     return (
       <main className="bg-[#141414] min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-white text-xl mb-4">Sign in to view your list</p>
-          <Link href="/login" className="bg-red-600 text-white px-6 py-2 rounded font-bold hover:bg-red-700 transition-colors">
-            Sign In
-          </Link>
-        </div>
+        <p className="text-gray-400">Loading...</p>
       </main>
     )
   }
 
-  const { data: listItems } = await supabaseServer
-    .from('my_list')
-    .select('*, movies(*)')
-    .eq('user_id', user.id)
-    .order('created_at', { ascending: false })
-
-  const movies = listItems?.map(item => item.movies).filter(Boolean) || []
+  const totalItems = movies.length + shows.length
 
   return (
     <main className="bg-[#141414] min-h-screen pt-28">
@@ -49,22 +54,40 @@ export default async function MyListPage() {
       <div className="pb-12">
         <div style={{ paddingLeft: '6rem', paddingRight: '6rem' }} className="mb-8">
           <h1 className="text-white text-4xl font-black">My List</h1>
-          <p className="text-gray-400 mt-1 text-sm">{movies.length} titles saved</p>
+          <p className="text-gray-400 mt-1 text-sm">{totalItems} titles saved</p>
         </div>
 
-        {movies.length === 0 ? (
-          <div style={{ paddingLeft: '6rem' }} className="text-center py-20">
+        {totalItems === 0 ? (
+          <div style={{ paddingLeft: '6rem' }} className="py-20">
             <p className="text-gray-400 text-xl mb-2">Your list is empty</p>
-            <p className="text-gray-600 text-sm mb-6">Add movies by clicking the + button on any title</p>
+            <p className="text-gray-600 text-sm mb-6">Add movies or shows by clicking the + button on any title</p>
             <Link href="/" className="bg-white text-black font-bold px-6 py-2 rounded hover:bg-gray-200 transition-colors">
               Browse Movies
             </Link>
           </div>
         ) : (
-          <div style={{ paddingLeft: '6rem', paddingRight: '6rem' }} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {movies.map((movie: any) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
+          <div style={{ paddingLeft: '6rem', paddingRight: '6rem' }}>
+            {movies.length > 0 && (
+              <div className="mb-10">
+                <h2 className="text-white text-xl font-bold mb-4">Movies</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                  {movies.map((movie: any) => (
+                    <MovieCard key={movie.id} movie={movie} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {shows.length > 0 && (
+              <div className="mb-10">
+                <h2 className="text-white text-xl font-bold mb-4">TV Shows</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                  {shows.map((show: any) => (
+                    <TVShowCard key={show.id} show={show} />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
