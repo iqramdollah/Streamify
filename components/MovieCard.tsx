@@ -1,6 +1,8 @@
 'use client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { supabase } from '@/lib/supabase'
 
 interface Movie {
   id: string
@@ -12,6 +14,46 @@ interface Movie {
 
 export default function MovieCard({ movie }: { movie: Movie }) {
   const router = useRouter()
+  const [inList, setInList] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const checkList = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+      const { data } = await supabase
+        .from('my_list')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('movie_id', movie.id)
+        .single()
+      setInList(!!data)
+    }
+    checkList()
+  }, [movie.id])
+
+  const toggleList = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setLoading(true)
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+
+    if (inList) {
+      await supabase
+        .from('my_list')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('movie_id', movie.id)
+      setInList(false)
+    } else {
+      await supabase
+        .from('my_list')
+        .insert({ user_id: user.id, movie_id: movie.id })
+      setInList(true)
+    }
+    setLoading(false)
+  }
 
   return (
     <Link href={`/watch/${movie.id}`}>
@@ -40,6 +82,7 @@ export default function MovieCard({ movie }: { movie: Movie }) {
               <button
                 onClick={e => {
                   e.preventDefault()
+                  e.stopPropagation()
                   router.push(`/watch/${movie.id}`)
                 }}
                 className="bg-white text-black rounded-full w-7 h-7 flex items-center justify-center text-xs font-bold hover:bg-gray-200 transition-colors"
@@ -47,10 +90,15 @@ export default function MovieCard({ movie }: { movie: Movie }) {
                 ▶
               </button>
               <button
-                onClick={e => e.preventDefault()}
-                className="border border-gray-400 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm hover:border-white transition-colors"
+                onClick={toggleList}
+                disabled={loading}
+                className={`border rounded-full w-7 h-7 flex items-center justify-center text-sm transition-colors ${
+                  inList
+                    ? 'bg-white text-black border-white'
+                    : 'border-gray-400 text-white hover:border-white'
+                }`}
               >
-                +
+                {inList ? '✓' : '+'}
               </button>
             </div>
           </div>
