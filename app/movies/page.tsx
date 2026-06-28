@@ -24,7 +24,7 @@ export default async function MoviesPage() {
   return (
     <main className="bg-[#141414] min-h-screen">
       <Navbar />
-      <div className="pt-24 pb-12">
+      <div className="pt-36 pb-12">
         {/* Header */}
         <div className="px-8 mb-8">
           <h1 className="text-white text-4xl font-black">Movies</h1>
