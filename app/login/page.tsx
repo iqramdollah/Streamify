@@ -55,7 +55,9 @@ export default function LoginPage() {
         <div className="w-full max-w-md bg-zinc-900 rounded-md px-16 py-16">
           <h1 className="text-white text-3xl font-bold mb-2">Sign in</h1>
           <p className="text-gray-500 text-sm mb-8">Portfolio project, this is not a real streaming service.</p>
-
+<p className="text-yellow-500/80 text-xs mb-8 bg-yellow-500/5 border border-yellow-500/20 rounded px-3 py-2">
+  ⚠ Please do not use your real email or password. Use the demo button below or any test credentials.
+</p>
           {/* Demo CTA — primary path */}
           <button
             onClick={handleDemoLogin}

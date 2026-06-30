@@ -37,7 +37,10 @@ export default function SignupPage() {
 
       <main className="flex flex-1 items-center justify-center px-4">
         <div className="w-full max-w-md bg-zinc-900 rounded-md px-16 py-16">
-          <h1 className="text-white text-4xl font-bold mb-10">Sign Up</h1>
+          <h1 className="text-white text-3xl font-bold mb-2">Sign up</h1>
+          <p className="text-yellow-500/80 text-xs mb-8 bg-yellow-500/5 border border-yellow-500/20 rounded px-3 py-2">
+            ⚠ This is a portfolio demo. Please use a fake email and password, do not use real credentials.
+          </p>
 
           <div className="flex flex-col gap-5">
             {/* Email */}
@@ -104,11 +107,6 @@ export default function SignupPage() {
             <Link href="/login" className="text-white font-semibold hover:underline">
               Sign in
             </Link>
-          </p>
-
-          <p className="text-gray-600 text-xs mt-5 leading-relaxed">
-            This page is protected by Google reCAPTCHA to ensure you&apos;re not a bot.{' '}
-            <a href="#" className="text-blue-500 hover:underline">Learn more</a>
           </p>
         </div>
       </main>
