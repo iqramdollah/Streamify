@@ -9,11 +9,12 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [demoLoading, setDemoLoading] = useState(false)
   const router = useRouter()
 
   const handleLogin = async () => {
     if (!email || !password) {
-      setError('Please enter your email and password.')
+      setError('Enter your email and password.')
       return
     }
     setLoading(true)
@@ -22,6 +23,21 @@ export default function LoginPage() {
     if (error) {
       setError(error.message)
       setLoading(false)
+    } else {
+      router.push('/')
+    }
+  }
+
+  const handleDemoLogin = async () => {
+    setDemoLoading(true)
+    setError('')
+    const { error } = await supabase.auth.signInWithPassword({
+      email: 'demo@streamify.com',
+      password: 'demo12345',
+    })
+    if (error) {
+      setError('Demo account unavailable right now.')
+      setDemoLoading(false)
     } else {
       router.push('/')
     }
@@ -37,7 +53,30 @@ export default function LoginPage() {
 
       <main className="flex flex-1 items-center justify-center px-4">
         <div className="w-full max-w-md bg-zinc-900 rounded-md px-16 py-16">
-          <h1 className="text-white text-4xl font-bold mb-10">Sign In</h1>
+          <h1 className="text-white text-3xl font-bold mb-2">Sign in</h1>
+          <p className="text-gray-500 text-sm mb-8">Portfolio project, this is not a real streaming service.</p>
+
+          {/* Demo CTA — primary path */}
+          <button
+            onClick={handleDemoLogin}
+            disabled={demoLoading}
+            className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded text-base transition-colors disabled:opacity-60 disabled:cursor-not-allowed mb-3"
+          >
+            {demoLoading ? 'Loading demo...' : 'View demo — no signup needed'}
+          </button>
+
+          {error && (
+            <p className="text-yellow-400 text-sm bg-yellow-400/10 border border-yellow-400/20 px-4 py-3 rounded mb-4">
+              {error}
+            </p>
+          )}
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-6">
+            <div className="h-px bg-zinc-700 flex-1" />
+            <span className="text-gray-500 text-xs uppercase tracking-wider">Or sign in</span>
+            <div className="h-px bg-zinc-700 flex-1" />
+          </div>
 
           <div className="flex flex-col gap-5">
             {/* Email */}
@@ -84,18 +123,12 @@ export default function LoginPage() {
               </label>
             </div>
 
-            {error && (
-              <p className="text-yellow-400 text-sm bg-yellow-400/10 border border-yellow-400/20 px-4 py-3 rounded">
-                {error}
-              </p>
-            )}
-
             <button
               onClick={handleLogin}
               disabled={loading}
-              className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded text-base transition-colors disabled:opacity-60 disabled:cursor-not-allowed mt-2"
+              className="w-full bg-zinc-700 hover:bg-zinc-600 text-white font-bold py-3.5 rounded text-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {loading ? 'Signing in...' : 'Sign In'}
+              {loading ? 'Signing in...' : 'Sign in'}
             </button>
 
             <div className="flex items-center justify-between text-sm text-gray-400">
@@ -112,11 +145,6 @@ export default function LoginPage() {
             <Link href="/signup" className="text-white font-semibold hover:underline">
               Sign up now
             </Link>
-          </p>
-
-          <p className="text-gray-600 text-xs mt-5 leading-relaxed">
-            This page is protected by Google reCAPTCHA to ensure you&apos;re not a bot.{' '}
-            <a href="#" className="text-blue-500 hover:underline">Learn more</a>
           </p>
         </div>
       </main>
