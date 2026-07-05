@@ -24,7 +24,6 @@ A Netflix-inspired streaming platform built with Next.js, Supabase, and Tailwind
 | TypeScript | Type safety |
 | Tailwind CSS | Styling |
 | Supabase | Database and authentication |
-| HLS.js | Video streaming |
 | Vercel | Deployment |
 
 ## Getting Started
