@@ -81,7 +81,7 @@ components/
   MovieRow.tsx      - Scrollable movie row
   TrailerCard.tsx   - Trailer embed card
   TrailerRow.tsx    - Scrollable trailer row
-  VideoPlayer.tsx   - HLS and YouTube player
+  VideoPlayer.tsx   - YouTube player
 lib/
   supabase.ts       - Supabase client
 
